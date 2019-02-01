@@ -1,0 +1,71 @@
+public class Permutation {
+	static String p="";
+    String res="";
+    int min_cost=Integer.MAX_VALUE;
+    int st=0;
+    int ed=p.length()-1;
+    int[][] job;
+    void call(int[][] job)
+    {
+        this.job=job;
+        //this.p=person;
+        permute(p,st,ed);
+    }
+  String swap(String str,int st,int end)
+    {
+        char a[]=str.toCharArray();
+       char temp=a[end];
+       a[end]=a[st];
+       a[st]=temp;
+       return String.valueOf(a);
+    
+    }
+  public void result()
+  {
+      System.out.println("your min cost="+min_cost+" job assiged to persons "+res);
+  
+  }
+    public void permute(String str,int st,int ed)// finding possible permutations of a person for a job
+     {
+         if(st==ed)
+         { 
+            
+             int sum=0;
+             System.out.print("per-->"+str+" ");
+             for(int i=0;i<str.length();i++)
+             {	int i2=(str.charAt(i)-'0')-1;
+                System.out.print("==="+job[i][i2]);
+                sum=sum+job[i][i2];
+             
+             }
+             System.out.println("==sum is="+sum);
+            if (min_cost>sum)
+            {
+                min_cost=sum;
+                res=str;
+            
+            }
+            
+            }
+         else
+         {
+            for(int i=st;i<=ed;i++)
+            {
+               str= swap(str,st,i);
+                permute(str,st+1,ed);
+                str=swap(str,i,st);
+            }
+         
+         }
+     }
+    public static void main(String[] args) {
+         p = "12345";//input number of person's
+        //Scanner sc=new Scanner(System.in);
+        int pj[][]={{1,2,3,4,6},{0,2,4,6,8},{6,1,8,10,0},{1,3,4,0,11},{3,4,5,8,20}};//row-->persons col-->jobs
+        Permutation obj=new Permutation();
+        obj.call(pj);
+        obj.result();
+        
+    }
+    
+}
